@@ -74,7 +74,7 @@ h1, h2, h3, h4, h5, h6 {
 * { box-sizing: border-box; }
 
 .container { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; }
-.section { padding: 6.5rem 0; }
+.section { padding: 5.6rem 0; }
 .section-narrow { max-width: 980px; }
 .section-header { margin-bottom: 2.5rem; }
 .section-kicker {
@@ -102,6 +102,7 @@ h1, h2, h3, h4, h5, h6 {
 .section { animation: slideUp 0.45s ease-out; }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; white-space: nowrap; padding: .9rem 1.5rem; border-radius: 14px; cursor: pointer; border: 1px solid transparent; font-weight: 600; font-size: 14px; transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1); text-decoration: none; }
+.btn, .btn * { flex-wrap: nowrap; }
 .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-strong)); color: white; border: 1px solid color-mix(in srgb, var(--accent) 80%, white); box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 28%, transparent); }
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 30px color-mix(in srgb, var(--accent) 28%, transparent); }
 .btn-outline { background: color-mix(in srgb, var(--surface) 80%, transparent); color: var(--foreground); border: 1px solid color-mix(in srgb, var(--card-border) 92%, transparent); }
@@ -254,15 +255,52 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-actions { display: flex; align-items: center; gap: 0.75rem; }
 
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--card-border) 60%, transparent);
+  background: transparent;
+  color: var(--foreground);
+}
+
+.nav-menu {
+  display: none;
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--card-border) 60%, transparent);
+  background: color-mix(in srgb, var(--surface) 38%, transparent);
+  box-shadow: 0 18px 40px rgba(11, 27, 36, 0.12);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-menu--open {
+  display: flex;
+}
+
+.nav-menu-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+
 .hero-section { padding-top: 0; min-height: calc(100vh - 84px); display: flex; align-items: center; }
 .hero-container { max-width: 860px; margin: 0 auto; text-align: center; }
 .hero-title {
-  font-size: clamp(3rem, 7vw, 4.8rem);
-  line-height: 1.02;
+  font-size: clamp(2.6rem, 6.8vw, 4.6rem);
+  line-height: 1.04;
   margin-bottom: 0.6rem;
   font-weight: 500;
 }
-.hero-lead { color: var(--muted); font-size: 1.1rem; line-height: 1.75; max-width: 680px; margin: 0 auto 1.2rem; }
+.hero-lead { color: var(--muted); font-size: 1.05rem; line-height: 1.75; max-width: 640px; margin: 0 auto 1.1rem; }
 .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
 .bento-grid {
@@ -369,6 +407,59 @@ h1, h2, h3, h4, h5, h6 {
   filter: saturate(0.6);
 }
 
+.modal-scroll {
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.modal-scroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.react-datepicker {
+  border: 1px solid color-mix(in srgb, var(--card-border) 90%, transparent) !important;
+  border-radius: 16px !important;
+  background: var(--surface-solid) !important;
+  box-shadow: 0 18px 40px rgba(11, 27, 36, 0.14) !important;
+  font-family: var(--font-content) !important;
+}
+
+.react-datepicker__header {
+  background: color-mix(in srgb, var(--surface) 90%, transparent) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--card-border) 90%, transparent) !important;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+  color: var(--foreground) !important;
+  font-weight: 600 !important;
+}
+
+.react-datepicker__day,
+.react-datepicker__day-name,
+.react-datepicker__time-name {
+  color: var(--foreground) !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__time-list-item--selected {
+  background: var(--accent) !important;
+  color: #fff !important;
+}
+
+.react-datepicker__time-list {
+  scrollbar-width: none;
+}
+
+.react-datepicker__time-list::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
 .footer-shell { border-top: 1px solid var(--card-border); margin-top: 64px; padding: 40px 0; }
 .footer-grid { display: grid; gap: 32px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
 .footer-sub { border-top: 1px solid var(--card-border); margin-top: 32px; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -423,7 +514,18 @@ h1, h2, h3, h4, h5, h6 {
   .hero { flex-direction: column; text-align: center; }
   .hero-right { order: -1; }
   .hero-section { min-height: calc(100vh - 84px); }
-  .nav-shell { padding: 0.6rem 0.8rem; }
+  .nav-shell { padding: 0.55rem 0.8rem; width: min(640px, 94vw); }
+  .nav-links { gap: 0.9rem; }
+  .nav-actions { gap: 0.5rem; }
+  .section { padding: 4.2rem 0; }
+  .section-header { margin-bottom: 1.6rem; }
+  .section-title { font-size: clamp(1.9rem, 6vw, 2.6rem); }
+  .section-subtitle { font-size: 0.98rem; }
+  .hero-title { font-size: clamp(2.2rem, 8vw, 3.2rem); }
+  .hero-lead { font-size: 0.98rem; }
+  .work-body { padding: 18px; }
+  .testimonial-card { padding: 18px; }
+  .contact-card { padding: 14px; }
   .bento-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .bento-span-2,
   .bento-span-3,
@@ -436,6 +538,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 640px) {
+  .container { padding: 0 1.1rem; }
+  .nav-shell { width: 100%; justify-content: space-between; }
+  .nav-links { display: none; }
+  .nav-actions { display: none; }
+  .nav-toggle { display: inline-flex; }
+  .nav-menu { width: 100%; }
+  .nav-menu a { padding: 8px 6px; }
+  .nav-menu-actions { width: 100%; justify-content: space-between; }
+  .section { padding: 3.4rem 0; }
+  .section-header { margin-bottom: 1.2rem; }
+  .section-kicker { font-size: 11px; letter-spacing: 0.2em; }
+  .section-title { font-size: clamp(1.7rem, 7vw, 2.2rem); }
+  .hero-title { font-size: clamp(2rem, 9vw, 2.8rem); }
+  .hero-lead { font-size: 0.94rem; }
+  .btn { padding: 0.75rem 1.2rem; font-size: 13px; }
+  .work-body { padding: 16px; }
+  .testimonial-card { padding: 14px; }
+  .testimonial-card-inner { min-height: 180px; }
+  .contact-card { padding: 12px; }
+  .about-stat-card { padding: 14px !important; }
+  .about-stats { gap: 12px !important; }
   .bento-grid { grid-template-columns: 1fr; }
   .bento-span-2,
   .bento-span-3,

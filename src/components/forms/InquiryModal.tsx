@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -12,10 +14,10 @@ interface InquiryFormData {
   phone: string;
   email: string;
   serviceNeeded: string;
-  preferredDate: string;
-  timeSlotOne: string;
-  timeSlotTwo: string;
-  timeSlotThree: string;
+  preferredDate: Date | null;
+  timeSlotOne: Date | null;
+  timeSlotTwo: Date | null;
+  timeSlotThree: Date | null;
   projectDetails: string;
 }
 
@@ -25,10 +27,10 @@ const INITIAL_FORM: InquiryFormData = {
   phone: '',
   email: '',
   serviceNeeded: 'Company Website',
-  preferredDate: '',
-  timeSlotOne: '',
-  timeSlotTwo: '',
-  timeSlotThree: '',
+  preferredDate: null,
+  timeSlotOne: null,
+  timeSlotTwo: null,
+  timeSlotThree: null,
   projectDetails: '',
 };
 
@@ -74,7 +76,7 @@ export default function InquiryModal({
 
   const subtitle = 'Tell us what website you need. Share the project details and preferred timeline, and we will reply from our side.';
 
-  const updateField = (key: keyof InquiryFormData, value: string) => {
+  const updateField = (key: keyof InquiryFormData, value: string | Date | null) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -91,8 +93,28 @@ export default function InquiryModal({
       toast.error('Please enter your phone number.');
       return;
     }
+    if (!form.email.trim()) {
+      toast.error('Please enter your email address.');
+      return;
+    }
     if (!form.serviceNeeded) {
       toast.error('Please select a service.');
+      return;
+    }
+    if (!form.preferredDate) {
+      toast.error('Please select a preferred date.');
+      return;
+    }
+    if (!form.timeSlotOne) {
+      toast.error('Please choose the first time slot.');
+      return;
+    }
+    if (!form.timeSlotTwo) {
+      toast.error('Please choose the second time slot.');
+      return;
+    }
+    if (!form.projectDetails.trim()) {
+      toast.error('Please share your project details.');
       return;
     }
 
@@ -150,7 +172,7 @@ export default function InquiryModal({
               </button>
 
                 <div className="px-5 py-5 sm:px-6 md:px-8">
-                  <div className="max-w-2xl pr-12">
+                  <div className="max-w-2xl sm:pr-12">
                     <div className="inline-flex rounded-full px-4 py-2 text-xs sm:text-sm" style={{ border: '1px solid var(--card-border)', background: 'var(--accent-soft)', color: 'var(--accent)' }}>
                       Inquiry form
                     </div>
@@ -162,7 +184,7 @@ export default function InquiryModal({
                   </p>
                 </div>
 
-                <div className="mt-6 grid gap-4 md:grid-cols-2">
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
                   <Field label="Your Name" required>
                     <input value={form.name} onChange={(e) => updateField('name', e.target.value)} className="input-premium" placeholder="Enter your name" required />
                   </Field>
@@ -172,10 +194,10 @@ export default function InquiryModal({
                   <Field label="Phone Number" required>
                     <input value={form.phone} onChange={(e) => updateField('phone', e.target.value)} className="input-premium" placeholder="Enter phone number" type="tel" required />
                   </Field>
-                  <Field label="Email Address">
-                    <input value={form.email} onChange={(e) => updateField('email', e.target.value)} className="input-premium" placeholder="you@business.com" type="email" />
+                  <Field label="Email Address" required>
+                    <input value={form.email} onChange={(e) => updateField('email', e.target.value)} className="input-premium" placeholder="you@business.com" type="email" required />
                   </Field>
-                  <div className="md:col-span-2">
+                  <div className="sm:col-span-2">
                     <Field label="Service Needed" required>
                       <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
                         {SERVICES.map((service) => {
@@ -199,25 +221,62 @@ export default function InquiryModal({
                       </div>
                     </Field>
                   </div>
-                  <Field label="Preferred Date">
-                    <input value={form.preferredDate} onChange={(e) => updateField('preferredDate', e.target.value)} className="input-premium input-date" type="date" />
+                  <Field label="Preferred Date" required>
+                    <DatePicker
+                      selected={form.preferredDate}
+                      onChange={(date) => updateField('preferredDate', date)}
+                      className="input-premium"
+                      placeholderText="Select date"
+                      dateFormat="MMM d, yyyy"
+                    />
                   </Field>
-                  <Field label="Available Time Slot 1 (24h)">
-                    <input value={form.timeSlotOne} onChange={(e) => updateField('timeSlotOne', e.target.value)} className="input-premium" type="time" step={900} />
+                  <Field label="Available Time Slot 1" required>
+                    <DatePicker
+                      selected={form.timeSlotOne}
+                      onChange={(date) => updateField('timeSlotOne', date)}
+                      className="input-premium"
+                      placeholderText="Select time"
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={30}
+                      timeCaption="Time"
+                      dateFormat="HH:mm"
+                    />
                   </Field>
-                  <Field label="Available Time Slot 2 (24h)">
-                    <input value={form.timeSlotTwo} onChange={(e) => updateField('timeSlotTwo', e.target.value)} className="input-premium" type="time" step={900} />
+                  <Field label="Available Time Slot 2" required>
+                    <DatePicker
+                      selected={form.timeSlotTwo}
+                      onChange={(date) => updateField('timeSlotTwo', date)}
+                      className="input-premium"
+                      placeholderText="Select time"
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={30}
+                      timeCaption="Time"
+                      dateFormat="HH:mm"
+                    />
                   </Field>
-                  <Field label="Available Time Slot 3 (24h)">
-                    <input value={form.timeSlotThree} onChange={(e) => updateField('timeSlotThree', e.target.value)} className="input-premium" type="time" step={900} />
+                  <Field label="Available Time Slot 3">
+                    <DatePicker
+                      selected={form.timeSlotThree}
+                      onChange={(date) => updateField('timeSlotThree', date)}
+                      className="input-premium"
+                      placeholderText="Optional"
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={30}
+                      timeCaption="Time"
+                      dateFormat="HH:mm"
+                    />
                   </Field>
-                  <div className="md:col-span-2">
-                    <Field label="Project / Business Details">
+                  <div className="sm:col-span-2">
+                    <Field label="Project / Business Details" required>
                       <textarea
                         value={form.projectDetails}
                         onChange={(e) => updateField('projectDetails', e.target.value)}
                         className="input-premium min-h-32 resize-y sm:min-h-36"
                         placeholder="Tell us about your business, website pages needed, budget range, and goals."
+                        required
                       />
                     </Field>
                   </div>

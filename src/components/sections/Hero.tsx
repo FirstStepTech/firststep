@@ -32,8 +32,10 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="hero-actions"
         >
-          <Button variant="primary" className="rounded-full whitespace-nowrap" onClick={() => window.dispatchEvent(new Event('open-consultation'))}>
-            Start a Project <ChevronRight className="h-4 w-4" />
+          <Button variant="primary" className="rounded-full inline-flex items-center gap-2" onClick={() => window.dispatchEvent(new Event('open-consultation'))}>
+            <span className="inline-flex items-center gap-2 whitespace-nowrap">
+              Start a Project <ChevronRight className="h-4 w-4" />
+            </span>
           </Button>
           <a href="#work" className="btn btn-outline rounded-full whitespace-nowrap">See Our Work</a>
         </motion.div>

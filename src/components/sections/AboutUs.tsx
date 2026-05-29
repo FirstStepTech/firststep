@@ -20,7 +20,7 @@ export default function AboutUs() {
           </p>
         </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 20 }}>
+        <div className="about-stats" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 20 }}>
           {[
             { number: '2', label: 'Focused team' },
             { number: 'MERN', label: 'Modern stack' },
@@ -32,7 +32,7 @@ export default function AboutUs() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className="glass-card card-hover"
+              className="glass-card card-hover about-stat-card"
               style={{ padding: 22, borderRadius: 20 }}
             >
               <div style={{ fontSize: '24px', fontWeight: 700, color: 'var(--accent)', marginBottom: 6 }}>{stat.number}</div>
